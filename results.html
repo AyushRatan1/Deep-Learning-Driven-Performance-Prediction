@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Textile-Based Wearable Antenna Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .plot-container {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .plot {
+            width: 100%;
+            max-width: 800px;
+            margin: 10px auto;
+            display: block;
+        }
+        .summary {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .compliance {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .metric {
+            flex: 1;
+            min-width: 220px;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .compliant {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        .partial {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Deep Learning-Driven Performance Prediction of Textile-Based Wearable Antennas</h1>
+    <p>This report presents the analysis of synthetic data generated for textile-based wearable antennas operating in ISM bands (2.4 GHz and 5.8 GHz) for healthcare applications.</p>
+    
+    <div class="summary">
+        <h2>Summary Statistics</h2>
+        <p>The dataset consists of 50 synthetic antenna designs with the following characteristics:</p>
+        <ul>
+            <li><strong>Gain range:</strong> 2.55 to 4.91 dBi</li>
+            <li><strong>SAR range:</strong> 0.50 to 1.09 W/kg</li>
+            <li><strong>Bending radius range:</strong> 6.84 to 29.90 mm</li>
+        </ul>
+    </div>
+    
+    <div class="compliance">
+        <h2 style="width: 100%;">Compliance with Target Metrics</h2>
+        
+        <div class="metric compliant">
+            <h3>Gain (3-5 dBi)</h3>
+            <p>94% of designs</p>
+            <p>Target met by 47 out of 50 designs</p>
+        </div>
+        
+        <div class="metric compliant">
+            <h3>SAR (≤1.6 W/kg)</h3>
+            <p>100% of designs</p>
+            <p>Target met by all 50 designs</p>
+        </div>
+        
+        <div class="metric partial">
+            <h3>Bending radius (≥10 mm)</h3>
+            <p>84% of designs</p>
+            <p>Target met by 42 out of 50 designs</p>
+        </div>
+        
+        <div class="metric partial">
+            <h3>All criteria met</h3>
+            <p>80% of designs</p>
+            <p>40 out of 50 designs meet all criteria</p>
+        </div>
+    </div>
+    
+    <h2>Visualization Results</h2>
+    
+    <div class="plot-container">
+        <h3>Radiation Pattern</h3>
+        <p>2D visualization of the antenna radiation pattern showing the directional characteristics.</p>
+        <img src="plots/sample_radiation_pattern.png" alt="Radiation Pattern" class="plot">
+    </div>
+    
+    <div class="plot-container">
+        <h3>S-Parameters (Return Loss)</h3>
+        <p>S11 parameter showing antenna return loss across the frequency range. Lower values indicate better impedance matching.</p>
+        <img src="plots/sample_s_parameters.png" alt="S-Parameters" class="plot">
+    </div>
+    
+    <div class="plot-container">
+        <h3>Gain Distribution</h3>
+        <p>Distribution of antenna gain values across all designs. Target range is 3-5 dBi.</p>
+        <img src="plots/gain_distribution.png" alt="Gain Distribution" class="plot">
+    </div>
+    
+    <div class="plot-container">
+        <h3>SAR Distribution</h3>
+        <p>Distribution of Specific Absorption Rate (SAR) values. All designs meet the regulatory limit of 1.6 W/kg.</p>
+        <img src="plots/sar_distribution.png" alt="SAR Distribution" class="plot">
+    </div>
+    
+    <div class="plot-container">
+        <h3>Effect of Bending Radius on Gain</h3>
+        <p>Scatter plot showing the relationship between bending radius and antenna gain.</p>
+        <img src="plots/bending_vs_gain.png" alt="Bending vs Gain" class="plot">
+    </div>
+    
+    <div class="plot-container">
+        <h3>Effect of Bending Radius on SAR</h3>
+        <p>Scatter plot showing the relationship between bending radius and SAR values.</p>
+        <img src="plots/bending_vs_sar.png" alt="Bending vs SAR" class="plot">
+    </div>
+    
+    <div class="footer">
+        <p>This analysis was generated using synthetic data for the Deep Learning-Driven Performance Prediction of Textile-Based Wearable Antennas project.</p>
+    </div>
+</body>
+</html> 

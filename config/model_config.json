@@ -1,0 +1,20 @@
+{
+    "data_path": "data/raw",
+    "params_file": "data/raw/antenna_params.csv",
+    "output_dir": "models",
+    "model_type": "multi_output",
+    "target_params": ["s11", "gain", "sar"],
+    "target_param": "gain",
+    "image_height": 128,
+    "image_width": 128,
+    "preprocess_data": true,
+    "test_size": 0.2,
+    "validation_size": 0.1,
+    "random_state": 42,
+    "dropout_rate": 0.3,
+    "learning_rate": 0.001,
+    "batch_size": 32,
+    "epochs": 100,
+    "patience": 15,
+    "use_tensorboard": true
+} 
