@@ -50,7 +50,7 @@ class SARAPIClient {
   private baseURL: string
 
   constructor() {
-    this.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8001"
+    this.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000"
   }
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
@@ -80,14 +80,21 @@ class SARAPIClient {
   }
 
   async getFrequencyBands(): Promise<FrequencyBand[]> {
-    return this.request<FrequencyBand[]>("/frequency-bands")
+    try {
+      const response = await this.request<{success: boolean, data: FrequencyBand[], count: number, fallback?: boolean}>("/bands")
+      return response.data || []
+    } catch (error) {
+      console.error("Failed to load frequency bands:", error)
+      return []
+    }
   }
 
   async predictSAR(request: PredictionRequest): Promise<SARPrediction> {
-    return this.request<SARPrediction>("/predict", {
+    const response = await this.request<{success: boolean, data: SARPrediction}>("/predict", {
       method: "POST",
       body: JSON.stringify(request),
     })
+    return response.data
   }
 
   async generateSample(bandId: string): Promise<AntennaParameters> {
@@ -103,11 +110,21 @@ class SARAPIClient {
   }
 
   async getSystemStatus(): Promise<any> {
-    return this.request<any>("/")
+    try {
+      return this.request<any>("/system-status")
+    } catch (error) {
+      console.error("System status check failed:", error)
+      return { status: "offline", error: "Failed to connect to backend" }
+    }
   }
 
   async healthCheck(): Promise<{ status: string; timestamp: string }> {
-    return this.request<{ status: string; timestamp: string }>("/health")
+    try {
+      return this.request<{ status: string; timestamp: string }>("/health")
+    } catch (error) {
+      console.error("Health check failed:", error)
+      return { status: "offline", timestamp: new Date().toISOString() }
+    }
   }
 
   async trainModel(request: TrainingRequest): Promise<TrainingResponse> {

@@ -37,6 +37,73 @@ export interface SARPrediction {
   radiation_pattern: Array<{ theta: number; phi: number; gain: number }>
   max_return_loss: number
   resonant_frequency: number
+  // Enhanced properties for safety and analysis
+  safety_assessment?: {
+    fcc: {
+      status: string
+      safety_margin_percent: number
+      limit_w_per_kg: number
+      standard: string
+      color: string
+      compliant: boolean
+      recommendation: string
+    }
+    icnirp: {
+      status: string
+      safety_margin_percent: number
+      limit_w_per_kg: number
+      standard: string
+      color: string
+      compliant: boolean
+      recommendation: string
+    }
+    overall_compliant: boolean
+    primary_standard: string
+    safety_score: number
+  }
+  tissue_analysis?: {
+    sar_skin: number
+    sar_fat: number
+    sar_muscle: number
+    depth_analysis: {
+      surface: number
+      depth_1mm: number
+      depth_5mm: number
+    }
+  }
+  frequency_sweep?: Array<{
+    frequency: number
+    gain: number
+    sar_skin_surface: number
+    sar_skin_2mm: number
+    sar_fat_surface: number
+    sar_muscle_surface: number
+    e_field: number
+    power_density: number
+    fcc_compliant: boolean
+    icnirp_compliant: boolean
+    safety_status: string
+    safety_margin_fcc: number
+  }>
+  circular_sar_map?: {
+    data: number[][]
+    resolution: number
+    mapSize: number
+    frequency: number
+    maxSAR: number
+    avgSAR: number
+    safeZones: {
+      safe: number
+      caution: number
+      warning: number
+    }
+    safety_assessment: {
+      fcc: any
+      icnirp: any
+      overall_status: string
+      recommendations: string[]
+    }
+  }
 }
 
 export interface ChatMessage {
@@ -55,7 +122,7 @@ interface SARState {
   predictionHistory: SARPrediction[]
   isLoading: boolean
   comparisonData: SARPrediction[]
-  activeView: "dashboard" | "comparison" | "history" | "settings" | "chat"
+  activeView: "dashboard" | "comparison" | "enhanced" | "history" | "settings" | "chat"
   selectedPrediction: SARPrediction | null
   chatMessages: ChatMessage[]
   frequencyBands: FrequencyBand[]
@@ -70,7 +137,7 @@ type SARAction =
   | { type: "ADD_TO_HISTORY"; payload: SARPrediction }
   | { type: "SET_LOADING"; payload: boolean }
   | { type: "SET_COMPARISON_DATA"; payload: SARPrediction[] }
-  | { type: "SET_ACTIVE_VIEW"; payload: "dashboard" | "comparison" | "history" | "settings" | "chat" }
+  | { type: "SET_ACTIVE_VIEW"; payload: "dashboard" | "comparison" | "enhanced" | "history" | "settings" | "chat" }
   | { type: "SET_SELECTED_PREDICTION"; payload: SARPrediction | null }
   | { type: "ADD_CHAT_MESSAGE"; payload: ChatMessage }
   | { type: "SET_FREQUENCY_BANDS"; payload: FrequencyBand[] }

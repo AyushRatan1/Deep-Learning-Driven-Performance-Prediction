@@ -4,30 +4,19 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel } from "@/components/ui/sidebar"
-import { useSAR, type FrequencyBand } from "@/components/sar-context"
+import { useSAR } from "@/components/sar-context"
 import { sarAPI } from "@/lib/sar-api"
 import { Shuffle, Play, Loader2, Settings2 } from "lucide-react"
-
-const frequencyBands: FrequencyBand[] = [
-  { id: "x-band", name: "X-band", range: "8-12 GHz", frequency: 10, color: "#3b82f6" },
-  { id: "ku-band", name: "Ku-band", range: "12-18 GHz", frequency: 15, color: "#8b5cf6" },
-  { id: "k-band", name: "K-band", range: "18-27 GHz", frequency: 22.5, color: "#06b6d4" },
-  { id: "ka-band", name: "Ka-band", range: "27-40 GHz", frequency: 33.5, color: "#10b981" },
-  { id: "v-band", name: "V-band", range: "40-75 GHz", frequency: 57.5, color: "#f59e0b" },
-  { id: "w-band", name: "W-band", range: "75-110 GHz", frequency: 92.5, color: "#ef4444" },
-  { id: "d-band", name: "D-band", range: "110-170 GHz", frequency: 140, color: "#ec4899" },
-]
+import { EnhancedFrequencySelector } from "@/components/enhanced-frequency-selector"
 
 export function ParameterInputPanel() {
   const { state, dispatch } = useSAR()
   const [isGenerating, setIsGenerating] = useState(false)
 
-  const handleBandChange = (bandId: string) => {
-    const band = frequencyBands.find((b) => b.id === bandId)
+  const handleBandChange = (band: any) => {
     if (band) {
       dispatch({ type: "SET_BAND", payload: band })
     }
@@ -81,27 +70,14 @@ export function ParameterInputPanel() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 px-3 pb-3">
-            {/* Frequency Band Selection */}
+            {/* Enhanced Frequency Band Selection */}
             <div className="space-y-1.5">
-              <Label htmlFor="frequency-band" className="text-xs font-semibold">
+              <Label className="text-xs font-semibold">
                 Frequency Band
               </Label>
-              <Select onValueChange={handleBandChange} value={state.selectedBand?.id || ""}>
-                <SelectTrigger className="bg-background/80 border-border/50 hover:border-primary/50 transition-colors h-8 text-xs">
-                  <SelectValue placeholder="Select band" />
-                </SelectTrigger>
-                <SelectContent>
-                  {frequencyBands.map((band) => (
-                    <SelectItem key={band.id} value={band.id}>
-                      <div className="flex items-center gap-2">
-                        <div className="h-2 w-2 rounded-full shadow-sm" style={{ backgroundColor: band.color }} />
-                        <span className="font-medium text-xs">{band.name}</span>
-                        <span className="text-muted-foreground text-xs">({band.range})</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <EnhancedFrequencySelector 
+                onBandChange={handleBandChange}
+              />
             </div>
 
             {/* Input Mode Toggle */}

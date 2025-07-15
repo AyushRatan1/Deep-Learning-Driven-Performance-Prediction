@@ -14,13 +14,17 @@ function ChatInterface() {
   const { state, dispatch } = useSAR()
   const [message, setMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
+  // Scroll to bottom when messages change
   useEffect(() => {
     // Auto-scroll to bottom when new messages are added
     if (scrollAreaRef.current) {
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight
     }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [state.chatMessages])
 
   const handleSendMessage = async () => {
@@ -39,19 +43,39 @@ function ChatInterface() {
     setIsLoading(true)
 
     try {
+      // Provide detailed context to the API
       const response = await apiClient.chatWithAI({
         message: message.trim(),
         context: {
           currentBand: state.selectedBand,
           parameters: state.parameters,
           currentPrediction: state.currentPrediction,
+          predictionHistory: state.predictionHistory.slice(0, 3), // Include last 3 predictions for context
+          frequencyBands: state.frequencyBands,
+          inputMode: state.inputMode,
+          appState: {
+            currentView: state.view,
+            totalPredictions: state.predictionHistory.length,
+            isSystemHealthy: state.systemStatus?.status === "healthy"
+          }
         }
       })
 
+      // Process the response - remove markdown formatting if present
+      let formattedResponse = response.response;
+      
+      // Format the response for better readability
+      formattedResponse = formattedResponse
+        .replace(/\*\*(.*?)\*\*/g, "$1") // Remove bold markdown
+        .replace(/\*(.*?)\*/g, "$1")     // Remove italic markdown
+        .replace(/#{1,6}\s+/g, "")       // Remove heading markdown
+        .replace(/`([^`]+)`/g, "$1")     // Remove inline code formatting
+        .replace(/```[a-z]*\n([\s\S]*?)```/g, "$1") // Remove code blocks
+      
       const aiMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         message: message.trim(),
-        response: response.response,
+        response: formattedResponse,
         timestamp: response.timestamp,
         isUser: false,
       }

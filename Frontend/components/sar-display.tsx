@@ -3,8 +3,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { AlertTriangle, CheckCircle, XCircle, Shield } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { AlertTriangle, CheckCircle, XCircle, Shield, Map } from "lucide-react"
 import { useSAR } from "@/components/sar-context"
+import { CircularSARMap } from "@/components/circular-sar-map"
 
 export function SARDisplay() {
   const { state } = useSAR()
@@ -68,10 +70,23 @@ export function SARDisplay() {
       <CardHeader>
         <CardTitle className="text-sm font-semibold flex items-center gap-2 text-bright">
           <Shield className="h-4 w-4 text-primary" />
-          SAR Value
+          SAR Analysis
         </CardTitle>
       </CardHeader>
       <CardContent>
+        <Tabs defaultValue="value" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="value" className="text-xs">
+              <Shield className="h-3 w-3 mr-1" />
+              SAR Value
+            </TabsTrigger>
+            <TabsTrigger value="map" className="text-xs">
+              <Map className="h-3 w-3 mr-1" />
+              Spatial Map
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="value" className="mt-4">
         <div className="text-center space-y-4">
           <div className="relative">
             <div className={`text-4xl font-bold ${safety.textColor}`}>{sarValue.toFixed(3)}</div>
@@ -110,6 +125,16 @@ export function SARDisplay() {
             FCC/ICNIRP Limit: 1.6 W/kg
           </div>
         </div>
+          </TabsContent>
+
+          <TabsContent value="map" className="mt-4">
+            <CircularSARMap 
+              sarData={currentPrediction}
+              showSafetyZones={true}
+              animationSpeed={2}
+            />
+          </TabsContent>
+        </Tabs>
       </CardContent>
     </Card>
   )

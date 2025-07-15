@@ -223,7 +223,7 @@ export function AppSidebar() {
                       <Zap className="w-4 h-4 text-orange-500" />
                       <span className="text-sm font-medium">Latest SAR</span>
                     </div>
-                    <div className="text-xl font-bold">{latestPrediction.sar_value.toFixed(3)}</div>
+                    <div className="text-xl font-bold">{(latestPrediction?.sar_value || 0).toFixed(3)}</div>
                     <div className="text-xs text-muted-foreground">W/kg</div>
                   </div>
                 )}
@@ -234,7 +234,7 @@ export function AppSidebar() {
                       <TrendingUp className="w-4 h-4 text-green-500" />
                       <span className="text-sm font-medium">Avg SAR</span>
                     </div>
-                    <div className="text-xl font-bold">{avgSAR.toFixed(3)}</div>
+                    <div className="text-xl font-bold">{(avgSAR || 0).toFixed(3)}</div>
                     <div className="text-xs text-muted-foreground">W/kg</div>
                   </div>
                 )}
@@ -256,11 +256,11 @@ export function AppSidebar() {
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div>
                   <div className="text-muted-foreground">SAR</div>
-                  <div className="font-medium">{currentPrediction.sar_value.toFixed(3)} W/kg</div>
+                  <div className="font-medium">{(currentPrediction?.sar_value || 0).toFixed(3)} W/kg</div>
                 </div>
                 <div>
                   <div className="text-muted-foreground">Gain</div>
-                  <div className="font-medium">{currentPrediction.gain.toFixed(1)} dBi</div>
+                  <div className="font-medium">{(currentPrediction?.gain || 0).toFixed(1)} dBi</div>
                 </div>
               </div>
             </div>
