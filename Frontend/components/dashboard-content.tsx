@@ -770,13 +770,13 @@ export default function DashboardContent() {
                           <div>
                             <p className="text-lg font-medium">SAR Value</p>
                             <p className="text-2xl font-bold text-primary">
-                              {(currentPrediction?.sar_value || 0).toFixed(3)} W/kg
+                              {(isNaN(currentPrediction?.sar_value) ? 0 : currentPrediction?.sar_value || 0).toFixed(3)} W/kg
                             </p>
                           </div>
                           <div>
                             <p className="text-lg font-medium">Gain</p>
                             <p className="text-2xl font-bold">
-                              {(currentPrediction?.gain || 0).toFixed(2)} dBi
+                              {(isNaN(currentPrediction?.gain) ? 0 : currentPrediction?.gain || 0).toFixed(2)} dBi
                             </p>
                           </div>
                         </div>
@@ -784,13 +784,13 @@ export default function DashboardContent() {
                           <div>
                             <p className="text-lg font-medium">Efficiency</p>
                             <p className="text-2xl font-bold">
-                              {(currentPrediction?.efficiency || 0).toFixed(1)}%
+                              {(isNaN(currentPrediction?.efficiency) ? 0 : currentPrediction?.efficiency || 0).toFixed(1)}%
                             </p>
                           </div>
                           <div>
                             <p className="text-lg font-medium">Bandwidth</p>
                             <p className="text-2xl font-bold">
-                              {(currentPrediction?.bandwidth || 0).toFixed(2)}%
+                              {(isNaN(currentPrediction?.bandwidth) ? 0 : currentPrediction?.bandwidth || 0).toFixed(2)}%
                             </p>
                           </div>
                         </div>

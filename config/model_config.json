@@ -3,18 +3,53 @@
     "params_file": "data/raw/antenna_params.csv",
     "output_dir": "models",
     "model_type": "multi_output",
+    "model_architecture": "enhanced",
     "target_params": ["s11", "gain", "sar"],
     "target_param": "gain",
     "image_height": 128,
     "image_width": 128,
     "preprocess_data": true,
-    "test_size": 0.2,
-    "validation_size": 0.1,
+    "augment_data": true,
+    "test_size": 0.15,
+    "validation_size": 0.15,
     "random_state": 42,
-    "dropout_rate": 0.3,
-    "learning_rate": 0.001,
+    "dropout_rate": 0.25,
+    "learning_rate": 0.0005,
     "batch_size": 32,
-    "epochs": 100,
-    "patience": 15,
-    "use_tensorboard": true
+    "epochs": 150,
+    "patience": 25,
+    "use_tensorboard": true,
+    "early_stopping": true,
+    "reduce_lr_on_plateau": true,
+    "optimizer": "adam",
+    "loss_weights": {
+        "sar": 2.0,
+        "gain": 1.5,
+        "s11": 1.0
+    },
+    "regularization": {
+        "l2_weight": 0.001,
+        "dropout_rate": 0.25
+    },
+    "data_augmentation": {
+        "rotation_range": 10,
+        "noise_std": 0.02,
+        "brightness_range": [0.9, 1.1],
+        "contrast_range": [0.9, 1.1]
+    },
+    "training": {
+        "shuffle": true,
+        "verbose": 1,
+        "validation_freq": 1,
+        "save_best_only": true,
+        "monitor": "val_loss",
+        "mode": "min"
+    },
+    "evaluation": {
+        "metrics": ["mse", "mae", "mape", "r2"],
+        "safety_thresholds": {
+            "sar_limit": 1.6,
+            "gain_range": [3.0, 5.0]
+        }
+    }
 } 

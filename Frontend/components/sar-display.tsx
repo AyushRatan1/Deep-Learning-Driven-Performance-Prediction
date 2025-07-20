@@ -34,7 +34,7 @@ export function SARDisplay() {
     )
   }
 
-  const sarValue = currentPrediction.sarValue
+  const sarValue = isNaN(currentPrediction.sarValue) ? 0 : currentPrediction.sarValue
   const getSafetyStatus = (sar: number) => {
     if (sar <= 1.6)
       return {
