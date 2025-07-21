@@ -331,13 +331,19 @@ export default function DashboardContent() {
                     />
                     <YAxis label={{ value: 'SAR (W/kg)', angle: -90, position: 'insideLeft' }} />
                     <Tooltip 
+                      shared={true}
+                      cursor={{ stroke: '#374151', strokeWidth: 1, strokeDasharray: '3 3' }}
                       formatter={(value, name) => [
                         `${value} W/kg`, 
-                        name === 'skin_surface' ? 'Skin Surface' : 
-                        name === 'skin_2mm' ? 'Skin 2mm Depth' : 
-                        name === 'fat' ? 'Fat Tissue' : 'Muscle Tissue'
+                        name
                       ]}
                       labelFormatter={(freq) => `Frequency: ${freq} GHz`}
+                      contentStyle={{
+                        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                        border: '1px solid #374151',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                      }}
                     />
                     <Legend />
                     <Line type="monotone" dataKey="skin_surface" stroke="#ef4444" strokeWidth={3} name="Skin Surface" />
