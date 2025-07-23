@@ -122,7 +122,7 @@ interface SARState {
   predictionHistory: SARPrediction[]
   isLoading: boolean
   comparisonData: SARPrediction[]
-  activeView: "dashboard" | "comparison" | "enhanced" | "history" | "settings" | "chat"
+  activeView: "dashboard" | "comparison" | "enhanced" | "history" | "settings" | "chat" | "professional-map"
   selectedPrediction: SARPrediction | null
   chatMessages: ChatMessage[]
   frequencyBands: FrequencyBand[]

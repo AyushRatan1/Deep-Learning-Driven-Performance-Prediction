@@ -34,6 +34,7 @@ import {
   Shield,
   Target,
   Clock,
+  MapPin,
 } from "lucide-react"
 
 export function AppSidebar() {
@@ -70,6 +71,14 @@ export function AppSidebar() {
       description: "Run antenna predictions",
       badge: isLoading ? "Running" : null,
       badgeVariant: isLoading ? "default" : "outline",
+    },
+    {
+      title: "Professional Map",
+      icon: MapPin,
+      view: "professional-map",
+      description: "Real-world SAR coverage mapping",
+      badge: "Mapbox",
+      badgeVariant: "secondary",
     },
     {
       title: "History",

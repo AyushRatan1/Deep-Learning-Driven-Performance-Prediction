@@ -19,6 +19,7 @@ import { CircularSARMap } from "@/components/circular-sar-map"
 import type { AntennaParameters, SARPrediction } from "@/components/sar-context"
 import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, ScatterChart, Scatter, PieChart, Pie, Cell, AreaChart, Area, RadialBarChart, RadialBar } from 'recharts';
 import { sarAPI } from "@/lib/sar-api"
+import { ProfessionalSARMap } from "@/components/professional-sar-map"
 
 const healthcareSARData = [
   { frequency: 2.4, cardiac: 0.42, neural: 0.68, glucose: 0.15 },
@@ -227,12 +228,15 @@ export default function DashboardContent() {
       <Tabs value={state.activeView} onValueChange={(value) => 
         dispatch({ type: "SET_ACTIVE_VIEW", payload: value as any })
       } className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5 h-12">
+        <TabsList className="grid w-full grid-cols-6 h-12">
           <TabsTrigger value="dashboard" className="text-sm px-3 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
             Overview
           </TabsTrigger>
           <TabsTrigger value="comparison" className="text-sm px-3 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
             Prediction
+          </TabsTrigger>
+          <TabsTrigger value="professional-map" className="text-sm px-3 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            Professional Map
           </TabsTrigger>
           <TabsTrigger value="enhanced" className="text-sm px-3 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
             Enhanced Analysis
@@ -1311,6 +1315,41 @@ export default function DashboardContent() {
                     <p><strong>SAR Limit:</strong> &lt; 0.5 W/kg</p>
                   </div>
                 </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="professional-map" className="space-y-6">
+          <Card className="border-2">
+            <CardHeader>
+              <CardTitle className="text-2xl flex items-center gap-2">
+                <Target className="h-6 w-6" />
+                Professional SAR Coverage Analysis
+              </CardTitle>
+              <CardDescription className="text-lg">
+                Real-world SAR mapping with Mapbox integration, device location, and regulatory compliance analysis
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="h-[800px]">
+                <ProfessionalSARMap 
+                  className="w-full h-full"
+                  antennaLocation={
+                    state.currentPrediction ? {
+                      latitude: 37.7749, // Default to San Francisco
+                      longitude: -122.4194,
+                      altitude: 10,
+                      name: `${state.selectedBand?.name || 'Unknown'} Antenna`,
+                      power: state.parameters.power_density * 100, // Convert to mW
+                      frequency: state.selectedBand?.center_freq || 2.45
+                    } : undefined
+                  }
+                  onLocationChange={(location) => {
+                    console.log('Antenna location changed:', location);
+                    // You can dispatch an action here to update the global state
+                  }}
+                />
               </div>
             </CardContent>
           </Card>
